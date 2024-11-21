@@ -1,0 +1,59 @@
+<div
+  class="navbar fixed bottom-0 left-0 w-full bg-white shadow-md flex justify-around p-3"
+>
+  <a
+    [routerLink]="['/pages/dashboard']"
+    routerLinkActive="active"
+    class="text-center"
+  >
+    <span class="icon block text-xl mb-1">
+      <i class="fas fa-home"></i>
+      <!-- Icono de inicio -->
+    </span>
+    <span class="label text-sm">Inicio</span>
+  </a>
+  <a
+    [routerLink]="['/pages/add']"
+    routerLinkActive="active"
+    class="text-center"
+  >
+    <span class="icon block text-xl mb-1">
+      <i class="fas fa-plus-circle"></i>
+      <!-- Icono de agregar -->
+    </span>
+    <span class="label text-sm">Agregar</span>
+  </a>
+  <a
+    [routerLink]="['/pages/update']"
+    routerLinkActive="active"
+    class="text-center"
+  >
+    <span class="icon block text-xl mb-1">
+      <i class="fas fa-sync-alt"></i>
+      <!-- Icono de actualizar -->
+    </span>
+    <span class="label text-sm">Actualizar</span>
+  </a>
+  <a
+    [routerLink]="['/pages/explore']"
+    routerLinkActive="active"
+    class="text-center"
+  >
+    <span class="icon block text-xl mb-1">
+      <i class="fas fa-search"></i>
+      <!-- Icono de explorar -->
+    </span>
+    <span class="label text-sm">Explorar</span>
+  </a>
+  <a
+    [routerLink]="['/pages/profile']"
+    routerLinkActive="active"
+    class="text-center"
+  >
+    <span class="icon block text-xl mb-1">
+      <i class="fas fa-user"></i>
+      <!-- Icono de perfil -->
+    </span>
+    <span class="label text-sm">Perfil</span>
+  </a>
+</div>

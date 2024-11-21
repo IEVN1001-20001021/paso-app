@@ -1,0 +1,188 @@
+<div
+  class="flex flex-col items-center justify-between min-h-screen bg-gray-100 p-6"
+>
+  <!-- Botón de cerrar -->
+  <button
+    class="absolute top-4 left-4 text-3xl bg-transparent border-none cursor-pointer"
+    [routerLink]="['/login']"
+  >
+    &times;
+  </button>
+
+  <!-- Formulario -->
+  <div class="relative w-full max-w-md bg-white shadow-md rounded-lg p-8">
+    <h1 class="mb-6 text-2xl font-semibold text-center">Regístrate</h1>
+
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <!-- Email -->
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-2"
+          >Correo Electrónico</label
+        >
+        <input
+          type="email"
+          id="email"
+          class="w-full p-3 border rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          formControlName="email"
+          placeholder="Introduce tu correo"
+          required
+        />
+        <p
+          *ngIf="
+            signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched
+          "
+          class="text-red-600 text-sm mt-2"
+        >
+          El correo electrónico no es válido.
+        </p>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label
+          for="password"
+          class="block text-sm font-medium text-gray-700 mb-2"
+          >Contraseña</label
+        >
+        <input
+          type="password"
+          id="password"
+          class="w-full p-3 border rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          formControlName="password"
+          placeholder="Introduce tu contraseña"
+          required
+        />
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="mb-4">
+        <label
+          for="confirm-password"
+          class="block text-sm font-medium text-gray-700 mb-2"
+          >Confirmar Contraseña</label
+        >
+        <input
+          type="password"
+          id="confirm-password"
+          class="w-full p-3 border rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          formControlName="confirmPassword"
+          placeholder="Repite tu contraseña"
+          required
+        />
+        <p
+          *ngIf="
+            signUpForm.get('password')?.value !==
+              signUpForm.get('confirmPassword')?.value &&
+            signUpForm.get('confirmPassword')?.touched
+          "
+          class="text-red-600 text-sm mt-2"
+        >
+          Las contraseñas no coinciden.
+        </p>
+      </div>
+
+      <!-- Información Personal -->
+      <div class="mb-4">
+        <label
+          for="first-name"
+          class="block text-sm font-medium text-gray-700 mb-2"
+          >Nombre</label
+        >
+        <input
+          type="text"
+          id="first-name"
+          class="w-full p-3 border rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          formControlName="firstName"
+          placeholder="Nombre"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="last-name"
+          class="block text-sm font-medium text-gray-700 mb-2"
+          >Apellido Paterno</label
+        >
+        <input
+          type="text"
+          id="last-name"
+          class="w-full p-3 border rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          formControlName="lastName"
+          placeholder="Apellido Paterno"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="mother-last-name"
+          class="block text-sm font-medium text-gray-700 mb-2"
+          >Apellido Materno</label
+        >
+        <input
+          type="text"
+          id="mother-last-name"
+          class="w-full p-3 border rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          formControlName="motherLastName"
+          placeholder="Apellido Materno"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="birthdate"
+          class="block text-sm font-medium text-gray-700 mb-2"
+          >Fecha de Nacimiento</label
+        >
+        <input
+          type="date"
+          id="birthdate"
+          class="w-full p-3 border rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          formControlName="birthdate"
+          required
+        />
+        <p
+          *ngIf="signUpForm.get('birthdate')?.hasError('underage')"
+          class="text-red-600 text-sm mt-2"
+        >
+          Debes tener al menos 18 años para registrarte.
+        </p>
+      </div>
+
+      <div class="mb-6">
+        <label for="gender" class="block text-sm font-medium text-gray-700 mb-2"
+          >Sexo</label
+        >
+        <select
+          id="gender"
+          class="w-full p-3 border rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          formControlName="gender"
+          required
+        >
+          <option value="" disabled selected>Selecciona tu sexo</option>
+          <option value="male">Masculino</option>
+          <option value="female">Femenino</option>
+          <option value="other">Otro</option>
+        </select>
+      </div>
+
+      <!-- Botón de envío -->
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition"
+      >
+        Registrarme
+      </button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full text-center text-sm text-gray-600 mt-6">
+    <p>
+      Al registrarte aceptas nuestros
+      <a href="#" class="text-blue-500">términos y condiciones</a>.
+    </p>
+  </footer>
+</div>

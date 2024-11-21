@@ -1,0 +1,20 @@
+<!-- home.component.html -->
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div
+    class="flex flex-col items-center justify-center w-full h-screen p-6 border-4 border-black sm:border-2"
+  >
+    <h1 class="text-center mb-5 text-4xl sm:text-3xl">Paso</h1>
+    <button
+      class="bg-orange-500 text-white px-8 py-4 mb-2 rounded-lg uppercase font-bold cursor-pointer hover:bg-orange-600"
+      [routerLink]="['sign-up']"
+    >
+      Crear una cuenta
+    </button>
+    <button
+      class="bg-blue-500 text-white px-8 py-4 mt-2 rounded-lg uppercase font-bold cursor-pointer hover:bg-blue-600"
+      [routerLink]="['sign-in']"
+    >
+      Iniciar sesión
+    </button>
+  </div>
+</div>

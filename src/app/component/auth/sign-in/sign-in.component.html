@@ -1,0 +1,61 @@
+<!-- sign-in.component.html -->
+<div
+  class="flex flex-col items-center justify-center min-h-screen bg-gray-100 relative"
+>
+  <button
+    class="absolute top-4 left-4 text-3xl bg-transparent border-none cursor-pointer"
+    [routerLink]="['/login']"
+  >
+    &times;
+  </button>
+  <div class="w-full max-w-md flex flex-col items-center text-center mt-4">
+    <h1 class="mb-5 text-3xl">Bienvenido a bordo!</h1>
+    <button
+      class="flex items-center justify-start w-11/12 max-w-md mb-4 py-2 px-4 text-lg font-bold bg-white border rounded-lg shadow cursor-pointer"
+    >
+      <img
+        src="https://img.icons8.com/color/48/000000/google-logo.png"
+        alt="Google"
+        class="mr-4 w-8 h-8"
+      />
+      Crear con Google
+    </button>
+    <button
+      class="flex items-center justify-start w-11/12 max-w-md mb-4 py-2 px-4 text-lg font-bold bg-white border rounded-lg shadow cursor-pointer"
+    >
+      <img
+        src="https://img.icons8.com/color/48/000000/facebook-new.png"
+        alt="Facebook"
+        class="mr-4 w-8 h-8"
+      />
+      Crear con Facebook
+    </button>
+    <button
+      class="flex items-center justify-start w-11/12 max-w-md mb-4 py-2 px-4 text-lg font-bold bg-white border rounded-lg shadow cursor-pointer"
+      [routerLink]="['/login/methods/email']"
+    >
+      <img
+        src="https://img.icons8.com/ios-glyphs/30/000000/new-post.png"
+        alt="Correo"
+        class="mr-4 w-8 h-8"
+      />
+      Crear con Correo
+    </button>
+    <button
+      class="flex items-center justify-start w-11/12 max-w-md mb-4 py-2 px-4 text-lg font-bold bg-white border rounded-lg shadow cursor-pointer"
+    >
+      <img
+        src="https://img.icons8.com/ios-glyphs/30/000000/phone.png"
+        alt="Teléfono"
+        class="mr-4 w-8 h-8"
+      />
+      Crear con Teléfono
+    </button>
+  </div>
+  <div class="absolute bottom-4 w-full text-center text-sm text-gray-600">
+    <p>
+      Al registrarte aceptas nuestros
+      <a href="#" class="text-blue-500">términos y condiciones</a>
+    </p>
+  </div>
+</div>
