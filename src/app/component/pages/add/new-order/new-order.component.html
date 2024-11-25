@@ -1,1 +1,58 @@
-<p>new-order works!</p>
+<div class="max-w-screen-xl mx-auto px-4 py-6">
+  <!-- Filtros (Fijos en la parte superior) -->
+  <div class="sticky top-0 bg-white z-10 p-4 shadow-md rounded-md">
+    <div class="space-y-4">
+      <!-- Input de búsqueda -->
+      <input
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="fetchStores()"
+        type="text"
+        placeholder="Buscar por nombre de tienda"
+        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      
+      <!-- Select de calificación -->
+      <select
+        [(ngModel)]="selectedRating"
+        (change)="fetchStores()"
+        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="">Selecciona una calificación</option>
+        <option *ngFor="let rating of ratings" [value]="rating">
+          {{ rating }} estrellas
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Lista de tiendas -->
+  <div
+    class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 overflow-y-auto"
+  >
+    <!-- Tarjeta de tienda -->
+    <div
+      *ngFor="let store of stores"
+      (click)="goToStore(store.id)"
+      class="bg-white p-4 rounded-lg shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg transition-shadow"
+    >
+      <!-- Imagen del logo -->
+      <div class="w-20 h-20 bg-gray-100 rounded-full overflow-hidden mb-4">
+        <img
+          [src]="store.logo_url"
+          alt="Logo de {{ store.nombre }}"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <!-- Información de la tienda -->
+      <h2 class="text-lg font-semibold text-gray-800">{{ store.nombre }}</h2>
+      <p class="text-sm text-gray-500">{{ store.ciudad }}</p>
+      <p class="text-yellow-500 text-sm font-medium">
+        {{ store.promedio_calificacion }} ★
+      </p>
+      <!-- Horarios -->
+      <p class="text-sm text-gray-400 mt-2">Horario: {{ store.horario }}</p>
+    </div>
+  </div>
+</div>
+<app-navbar></app-navbar>

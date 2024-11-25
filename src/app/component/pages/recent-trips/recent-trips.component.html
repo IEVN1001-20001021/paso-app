@@ -1,0 +1,69 @@
+<div class="container mx-auto p-4 bg-gray-100 rounded-lg shadow-md">
+  <h2 class="text-xl font-bold text-center mb-4">Viajes asignados</h2>
+  <div *ngIf="trips.length > 0; else noTrips" class="space-y-4">
+    <div
+      *ngFor="let trip of trips"
+      class="border rounded-lg p-4 bg-white shadow-md"
+    >
+      <div
+        class="flex justify-between items-center cursor-pointer"
+        (click)="toggleDetails(trip.id)"
+      >
+        <div>
+          <p class="font-semibold text-gray-700">Viaje ID: {{ trip.id }}</p>
+          <p class="text-sm text-gray-500">
+            Usuario: {{ trip.userName || "No asignado" }}
+          </p>
+          <p
+            class="text-sm font-medium"
+            [ngClass]="{
+              'text-green-500': trip.delivered,
+              'text-yellow-500': !trip.delivered
+            }"
+          >
+            {{ trip.delivered ? "Entregado" : "En proceso" }}
+          </p>
+        </div>
+        <span
+          class="text-gray-500 text-xl"
+          [ngClass]="{ 'rotate-180': expandedTrip === trip.id }"
+        >
+          ⌄
+        </span>
+      </div>
+      <div *ngIf="expandedTrip === trip.id" class="mt-4">
+        <h3 class="text-md font-semibold text-gray-600">Detalles del viaje</h3>
+        <ul class="text-sm text-gray-700">
+          <li *ngFor="let item of trip.items" class="flex justify-between">
+            <span>{{ item.name }}</span>
+            <span>Cant: {{ item.quantity }}</span>
+          </li>
+        </ul>
+        <hr class="my-2 border-gray-300" />
+        <p class="flex justify-between text-sm font-medium text-gray-800">
+          <span>Subtotal:</span>
+          <span>${{ trip.subtotal | number : "1.2-2" }}</span>
+        </p>
+        <p class="flex justify-between text-sm font-medium text-gray-800">
+          <span>Tarifas:</span>
+          <span>${{ trip.fees | number : "1.2-2" }}</span>
+        </p>
+        <p class="flex justify-between text-md font-bold text-gray-900">
+          <span>Total:</span>
+          <span>${{ trip.total | number : "1.2-2" }}</span>
+        </p>
+        <div class="text-right mt-4">
+          <button
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            (click)="markAsDelivered(trip.id)"
+          >
+            Entregar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noTrips>
+    <p class="text-center text-gray-500">No tienes viajes asignados.</p>
+  </ng-template>
+</div>

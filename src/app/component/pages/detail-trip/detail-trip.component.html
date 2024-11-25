@@ -1,0 +1,94 @@
+<div class="container mx-auto p-4 space-y-6">
+  <!-- Viaje Detalle -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <div class="text-center mb-6">
+      <p class="text-2xl font-bold text-gray-800">
+        {{ tripDetails?.ciudad_salida }} → {{ tripDetails?.ciudad_destino }}
+      </p>
+      <p class="text-lg text-gray-600 mt-2">
+        Llegada: {{ tripDetails?.fecha_salida | date : "shortDate" : "UTC" }}
+      </p>
+      <p class="text-lg text-gray-600 mt-2">
+        Regreso: {{ tripDetails?.fecha_regreso | date : "shortDate" : "UTC" }}
+      </p>
+    </div>
+
+    <!-- Comentarios y detalles -->
+    <div class="space-y-4">
+      <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold text-gray-800">
+          Comentarios del Conductor
+        </h3>
+        <p class="text-gray-600">
+          {{ tripDetails?.comentarios || "No hay comentarios disponibles." }}
+        </p>
+      </div>
+
+      <!-- Contenedores Calientes y Fríos -->
+      <div class="grid grid-cols-2 gap-4 mt-4">
+        <div class="bg-red-100 p-4 rounded-lg text-center">
+          <h4 class="text-lg font-semibold text-red-800">
+            Contenedor Caliente
+          </h4>
+          <p class="text-gray-600">
+            {{ tripDetails?.contenedor_caliente || "No disponible" }}
+          </p>
+        </div>
+        <div class="bg-blue-100 p-4 rounded-lg text-center">
+          <h4 class="text-lg font-semibold text-blue-800">Contenedor Frío</h4>
+          <p class="text-gray-600">
+            {{ tripDetails?.contenedor_frio || "No disponible" }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Perfil del Conductor -->
+    <div class="bg-gray-100 p-4 rounded-lg shadow-md mt-6">
+      <div class="flex items-center space-x-4">
+        <img
+          [src]="driverProfile?.imagen"
+          alt="Perfil del conductor"
+          class="w-20 h-20 rounded-full"
+        />
+        <div>
+          <p class="font-semibold text-xl text-gray-800">
+            {{ driverProfile?.nombre }}
+          </p>
+          <p class="text-sm text-gray-600">
+            Viajes realizados: {{ driverProfile?.viajes_realizados }}
+          </p>
+          <div class="flex items-center mt-2">
+            <span class="text-yellow-500">
+              <i
+                *ngFor="
+                  let star of [].constructor(driverProfile?.calificacion);
+                  let i = index
+                "
+                class="fas fa-star"
+              ></i>
+            </span>
+            <p class="text-sm text-gray-600 ml-2">
+              {{ driverProfile?.calificacion }} ({{
+                driverProfile?.cantidad_calificaciones
+              }}
+              calificaciones)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón para hacer encargo -->
+    <div class="flex justify-center mt-6">
+      <button
+        (click)="makeOrder()"
+        class="bg-blue-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-blue-600 focus:outline-none"
+      >
+        Hacer encargo
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-navbar></app-navbar>

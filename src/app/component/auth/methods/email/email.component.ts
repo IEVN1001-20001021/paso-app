@@ -5,11 +5,11 @@ import { NgIf } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-email',
-  standalone: true,
-  imports: [ReactiveFormsModule, NgIf, RouterLink],
-  templateUrl: './email.component.html',
-  styles: [],
+    selector: 'app-email',
+    standalone: true,
+    imports: [ReactiveFormsModule, NgIf, RouterLink],
+    templateUrl: './email.component.html',
+    styles: []
 })
 export class EmailComponent implements OnInit {
   loginForm!: FormGroup;

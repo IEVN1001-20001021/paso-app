@@ -1,0 +1,60 @@
+<div class="max-w-7xl mx-auto p-4">
+  <!-- Store Header -->
+  <div class="flex items-center justify-between p-4 bg-white shadow-md">
+    <div class="flex items-center">
+      <img
+        [src]="store.logo_url"
+        alt="Logo de la tienda"
+        class="h-16 w-16 rounded-full"
+      />
+      <div class="ml-4">
+        <h1 class="text-xl font-bold">{{ store.nombre }}</h1>
+        <p class="text-gray-500">
+          {{ store.direccion }}, {{ store.ciudad }}, {{ store.estado }}
+        </p>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">
+      <p>
+        Calificación: {{ store.promedio_calificacion }} ({{
+          store.cantidad_calificaciones
+        }}
+        opiniones)
+      </p>
+      <p>Tel: {{ store.telefono }}</p>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+    <div
+      *ngFor="let product of filteredProducts"
+      class="bg-white p-4 shadow-md rounded-md"
+    >
+      <img
+        [src]="product.imagen"
+        alt="{{ product.nombre }}"
+        class="h-48 w-full object-cover rounded-md"
+      />
+      <h2 class="text-lg font-bold mt-2">{{ product.nombre }}</h2>
+      <p class="text-gray-500">MX{{ product.precio_publico }}</p>
+      <p class="text-gray-500 font-bold">
+        {{ product.unidad === "k" ? "Kilos" : "Unidades" }}
+      </p>
+      <input
+        type="number"
+        min="1"
+        [(ngModel)]="product.quantity"
+        class="w-full border rounded p-2 mt-2"
+        placeholder="Cantidad"
+      />
+      <button
+        (click)="addToCart(product)"
+        class="w-full mt-4 bg-green-500 text-white p-2 rounded-md"
+      >
+        Añadir al carrito
+      </button>
+    </div>
+  </div>
+</div>
+<app-shop-car [store]="store"></app-shop-car>

@@ -1,42 +1,69 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "../../navbar/navbar.component";
+import { Router } from '@angular/router';
+import { PasoService } from '../../paso.service';
+import { CommonModule, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../../navbar/navbar.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink, CommonModule, NavbarComponent],
-  templateUrl: './dashboard.component.html'
+  imports: [CommonModule, NgIf, FormsModule, NavbarComponent],
+  templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
-  cities: string[] = ['León', 'Guanajuato', 'Irapuato', 'Celaya', 'San Miguel de Allende'];
+  cities: string[] = [
+    'León',
+    'Guanajuato',
+    'Irapuato',
+    'Celaya',
+    'San Miguel de Allende',
+  ];
   selectedCity: string = '';
   selectedDate: string = '';
   trips: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private pasoService: PasoService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadRecentTrips();
+  }
 
-  searchTrips() {
-    if (!this.selectedCity || !this.selectedDate) {
-      alert('Por favor, selecciona una ciudad y una fecha.');
+  loadRecentTrips(): void {
+    this.pasoService.getRecentTrips().subscribe(
+      (data: any) => {
+        console.log('Viajes más recientes:', data);
+        this.trips = data.trips.map((trip: any) => ({
+          ...trip,
+          fecha_salida: new Date(trip.fecha_salida).toISOString(),  // Convierte a Date
+          fecha_regreso: new Date(trip.fecha_regreso).toISOString(),  // Convierte a Date
+        }));
+      },
+      (error) => {
+        console.error('Error al cargar los viajes más recientes:', error);
+      }
+    );
+  }
+
+  searchTrips(): void {
+    if (!this.selectedCity && !this.selectedDate) {
       return;
     }
 
-    const url = `http://localhost:5000/api/get_trips?city=${encodeURIComponent(this.selectedCity)}&date=${encodeURIComponent(this.selectedDate)}`;
-    this.http.get<any[]>(url).subscribe(
-      data => {
-        this.trips = data;
-        if (this.trips.length === 0) {
-          alert('No hay viajes disponibles para la fecha seleccionada.');
+    this.pasoService
+      .getFilteredTrips(this.selectedCity, this.selectedDate)
+      .subscribe(
+        (data: any) => {
+          this.trips = data.trips;
+        },
+        (error) => {
+          console.error('Error al buscar viajes:', error);
         }
-      },
-      error => {
-        console.error('Error al obtener los viajes:', error);
-      }
-    );
+      );
+  }
+
+  viewDetails(tripId: number): void {
+    this.pasoService.setTripId(tripId); // Almacenar el ID del viaje en el servicio
+    this.router.navigate(['pages/viajes/detalle', tripId]);
   }
 }

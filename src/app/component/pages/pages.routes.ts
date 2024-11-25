@@ -37,4 +37,47 @@ export default [
       },
     ],
   },
+  {
+    path: 'profile',
+    loadComponent: () => import('./profile/profile.component').then((m) => m.ProfileComponent),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'viajes/detalle/:id',
+    loadComponent: () =>
+      import('./detail-trip/detail-trip.component').then(
+        (m) => m.DetailTripComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'new-order',
+    loadComponent: () =>
+      import('./add/new-order/new-order.component').then(
+        (m) => m.NewOrderComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'store-details/:id',
+    loadComponent: () =>
+      import('./store-details/store-details.component').then(
+        (m) => m.StoreDetailsComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ticket',
+    loadComponent: () =>
+      import('./ticket/ticket.component').then((m) => m.TicketComponent),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'notifications',
+    loadComponent: () =>
+      import('./notifications/notifications.component').then(
+        (m) => m.NotificationsComponent
+      ),
+    canActivate: [AuthGuard],
+  },
 ] as Routes;

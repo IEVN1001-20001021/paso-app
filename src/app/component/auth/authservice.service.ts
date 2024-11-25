@@ -18,6 +18,14 @@ export class AuthService {
 
   // Método para iniciar sesión
   login(userData: any): Observable<any> {
+    // Comprobar si ya existe un token
+    if (this.isAuthenticated()) {
+      return new Observable((observer) => {
+        observer.next({ message: 'Ya has iniciado sesión' });
+        observer.complete();
+      });
+    }
+
     return this.http.post(`${this.apiUrl}/login`, userData).pipe(
       // Después de un inicio de sesión exitoso, guardar el token en la cookie
       map((response: any) => {
@@ -28,6 +36,7 @@ export class AuthService {
       })
     );
   }
+
   // Método para verificar si el usuario está autenticado
   isAuthenticated(): boolean {
     return this.cookieService.check('authToken');

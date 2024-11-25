@@ -1,5 +1,4 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { jwtDecode } from 'jwt-decode';
 import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
@@ -12,11 +11,18 @@ import { PasoService } from '../../../paso.service';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
+import { NavbarComponent } from "../../../navbar/navbar.component";
+import { Router } from '@angular/router';
+
+interface JwtPayload {
+  user_id: string;
+}
 
 @Component({
   selector: 'app-new-trip',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, CommonModule],
+  imports: [ReactiveFormsModule, NgIf, CommonModule, NavbarComponent],
   templateUrl: './new-trip.component.html',
 })
 export class NewTripComponent implements OnInit {
@@ -27,14 +33,15 @@ export class NewTripComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private pasoService: PasoService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.travelForm = this.fb.group({
       departureCity: ['', Validators.required],
       destination: ['', Validators.required],
-      departureDate: ['', Validators.required],
+      arrivalDate: ['', Validators.required],
       returnDate: [
         '',
         [Validators.required, this.returnDateValidator.bind(this)],
@@ -53,8 +60,8 @@ export class NewTripComponent implements OnInit {
     return this.travelForm.get('destination');
   }
 
-  get departureDate() {
-    return this.travelForm.get('departureDate');
+  get arrivalDate() {
+    return this.travelForm.get('arrivalDate');
   }
 
   get returnDate() {
@@ -63,11 +70,11 @@ export class NewTripComponent implements OnInit {
 
   returnDateValidator(control: FormControl) {
     if (this.travelForm) {
-      const departureDate = this.travelForm.get('departureDate')?.value;
+      const arrivalDate = this.travelForm.get('arrivalDate')?.value;
       if (
-        departureDate &&
+        arrivalDate &&
         control.value &&
-        new Date(control.value) < new Date(departureDate)
+        new Date(control.value) < new Date(arrivalDate)
       ) {
         return { invalidReturnDate: true };
       }
@@ -88,34 +95,34 @@ export class NewTripComponent implements OnInit {
   onSubmit(): void {
     if (this.travelForm.valid) {
       const formData = { ...this.travelForm.value };
-
-      // Obtener el token de la cookie y extraer el usuario
+  
       const token = this.cookieService.get('authToken');
       if (token) {
-        const user = this.decodeToken(token); // Asume que tienes una función decodeToken
-        formData.usuario = user.user_id; // Cambié 'id' por 'user_id' para que coincida con el nombre en el token
+        const user = this.decodeToken(token);
+        formData.usuario = user.user_id;
       }
-
-      // Enviar los datos del formulario y registrar el viaje
+  
       this.pasoService
         .registrarViaje(formData)
         .pipe(
           catchError((error) => {
             console.error('Error al registrar el viaje:', error);
-            return of(null); // Maneja el error de manera segura
+            return of(null);
           })
         )
         .subscribe((response) => {
           if (response) {
             console.log('Viaje registrado:', response);
+            this.router.navigate(['/pages/dashboard']);
+            this.pasoService.getUserProfile().subscribe((perfil) => {
+              console.log('Perfil actualizado:', perfil);
+            });
           }
         });
     }
   }
 
-  decodeToken(token: string) {
-    // Usando jwt-decode (asegúrate de instalar esta librería en tu proyecto)
-    const jwtDecode = require('jwt-decode');
-    return jwtDecode(token);
+  decodeToken(token: string): JwtPayload {
+    return jwtDecode<JwtPayload>(token);
   }
 }

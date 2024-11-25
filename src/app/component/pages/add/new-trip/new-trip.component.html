@@ -1,17 +1,22 @@
-<!-- nuevo-viaje.component.html -->
-
-<div class="flex justify-center items-center min-h-screen bg-gray-100">
+<div
+  class="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8"
+>
   <form
     [formGroup]="travelForm"
     (ngSubmit)="onSubmit()"
-    class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-md"
+    class="w-full sm:w-11/12 md:max-w-2xl lg:max-w-4xl p-4 sm:p-6 bg-white rounded-lg shadow-md"
   >
-    <h2 class="text-2xl font-semibold text-blue-600 mb-6 text-center">
+    <h2
+      class="text-xl sm:text-2xl lg:text-3xl font-semibold text-blue-600 mb-4 sm:mb-6 text-center"
+    >
       Nuevo Viaje
     </h2>
 
     <div class="mb-4">
-      <label for="departureCity" class="block text-gray-700 font-medium mb-2">
+      <label
+        for="departureCity"
+        class="block text-sm sm:text-base text-gray-700 font-medium mb-2"
+      >
         ¿Cuál es tu ciudad de partida?
       </label>
       <input
@@ -19,7 +24,7 @@
         formControlName="departureCity"
         list="cities"
         placeholder="Ciudad de partida"
-        class="w-full p-3 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
         required
       />
       <datalist id="cities">
@@ -38,7 +43,10 @@
     </div>
 
     <div class="mb-4">
-      <label for="destination" class="block text-gray-700 font-medium mb-2">
+      <label
+        for="destination"
+        class="block text-sm sm:text-base text-gray-700 font-medium mb-2"
+      >
         ¿Cuál es tu ciudad de destino?
       </label>
       <input
@@ -46,7 +54,7 @@
         formControlName="destination"
         list="cities"
         placeholder="Ciudad de destino"
-        class="w-full p-3 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
         required
       />
       <div
@@ -57,53 +65,64 @@
       </div>
     </div>
 
-    <div class="mb-4">
-      <label for="departureDate" class="block text-gray-700 font-medium mb-2">
-        ¿Cuándo llegas a la ciudad de destino?
-      </label>
-      <input
-        id="departureDate"
-        type="date"
-        formControlName="departureDate"
-        class="w-full p-3 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        required
-      />
-      <div
-        *ngIf="departureDate?.invalid && departureDate?.touched"
-        class="text-red-500 text-sm mt-2"
-      >
-        Selecciona una fecha válida.
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      <div>
+        <label
+          for="arrivalDate"
+          class="block text-sm sm:text-base text-gray-700 font-medium mb-2"
+        >
+          ¿Cuándo llegas a la ciudad de destino?
+        </label>
+        <input
+          id="arrivalDate"
+          type="date"
+          formControlName="arrivalDate"
+          class="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+        />
+        <div
+          *ngIf="arrivalDate?.invalid && arrivalDate?.touched"
+          class="text-red-500 text-sm mt-2"
+        >
+          Selecciona una fecha válida.
+        </div>
+      </div>
+
+      <div>
+        <label
+          for="returnDate"
+          class="block text-sm sm:text-base text-gray-700 font-medium mb-2"
+        >
+          ¿Cuándo regresas a la ciudad de origen?
+        </label>
+        <input
+          id="returnDate"
+          type="date"
+          formControlName="returnDate"
+          class="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+        />
+        <div
+          *ngIf="returnDate?.invalid && returnDate?.touched"
+          class="text-red-500 text-sm mt-2"
+        >
+          Selecciona una fecha válida y posterior a la de salida.
+        </div>
       </div>
     </div>
 
     <div class="mb-4">
-      <label for="returnDate" class="block text-gray-700 font-medium mb-2">
-        ¿Cuándo regresas a la ciudad de origen?
-      </label>
-      <input
-        id="returnDate"
-        type="date"
-        formControlName="returnDate"
-        class="w-full p-3 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        required
-      />
-      <div
-        *ngIf="returnDate?.invalid && returnDate?.touched"
-        class="text-red-500 text-sm mt-2"
+      <label
+        for="coldContainers"
+        class="block text-sm sm:text-base text-gray-700 font-medium mb-2"
       >
-        Selecciona una fecha válida y posterior a la de salida.
-      </div>
-    </div>
-
-    <div class="mb-4">
-      <label for="coldContainers" class="block text-gray-700 font-medium mb-2">
         ¿Cuántos contenedores de frío llevas?
       </label>
       <div class="flex items-center">
         <button
           type="button"
           (click)="updateCount('cold', -1)"
-          class="px-4 py-2 bg-gray-200 rounded-md"
+          class="px-4 py-2 bg-gray-200 text-sm sm:text-base rounded-md"
         >
           -
         </button>
@@ -113,13 +132,13 @@
           type="number"
           [value]="coldContainers"
           min="0"
-          class="w-20 text-center mx-2 p-3 border border-gray-300 rounded-md text-lg"
+          class="w-16 text-center mx-2 p-2 border border-gray-300 rounded-md text-base"
           readonly
         />
         <button
           type="button"
           (click)="updateCount('cold', 1)"
-          class="px-4 py-2 bg-gray-200 rounded-md"
+          class="px-4 py-2 bg-gray-200 text-sm sm:text-base rounded-md"
         >
           +
         </button>
@@ -127,14 +146,17 @@
     </div>
 
     <div class="mb-4">
-      <label for="hotContainers" class="block text-gray-700 font-medium mb-2">
+      <label
+        for="hotContainers"
+        class="block text-sm sm:text-base text-gray-700 font-medium mb-2"
+      >
         ¿Cuántos contenedores de caliente llevas?
       </label>
       <div class="flex items-center">
         <button
           type="button"
           (click)="updateCount('hot', -1)"
-          class="px-4 py-2 bg-gray-200 rounded-md"
+          class="px-4 py-2 bg-gray-200 text-sm sm:text-base rounded-md"
         >
           -
         </button>
@@ -144,13 +166,13 @@
           type="number"
           [value]="hotContainers"
           min="0"
-          class="w-20 text-center mx-2 p-3 border border-gray-300 rounded-md text-lg"
+          class="w-16 text-center mx-2 p-2 border border-gray-300 rounded-md text-base"
           readonly
         />
         <button
           type="button"
           (click)="updateCount('hot', 1)"
-          class="px-4 py-2 bg-gray-200 rounded-md"
+          class="px-4 py-2 bg-gray-200 text-sm sm:text-base rounded-md"
         >
           +
         </button>
@@ -158,26 +180,30 @@
     </div>
 
     <div class="mb-4">
-      <label for="comments" class="block text-gray-700 font-medium mb-2">
+      <label
+        for="comments"
+        class="block text-sm sm:text-base text-gray-700 font-medium mb-2"
+      >
         ¿Gustas agregar comentarios o detalles de tu viaje?
       </label>
       <textarea
         id="comments"
         formControlName="comments"
         rows="4"
-        class="w-full p-3 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Escribe tus comentarios aquí..."
       ></textarea>
     </div>
 
-    <div class="flex justify-end">
+    <div class="mt-6 flex justify-center">
       <button
         type="submit"
         [disabled]="travelForm.invalid"
-        class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white font-semibold rounded-md disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         Enviar
       </button>
     </div>
   </form>
 </div>
+<app-navbar></app-navbar>

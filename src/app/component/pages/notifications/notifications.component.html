@@ -1,0 +1,121 @@
+<div class="bg-gray-100 min-h-screen p-6">
+  <div class="container mx-auto">
+    <h1 class="text-2xl font-bold mb-4 text-center">Pedidos en Proceso</h1>
+
+    <!-- Mostrar un mensaje de carga si está cargando -->
+    <div *ngIf="isLoading" class="text-center my-4">
+      <p>Cargando pedidos...</p>
+    </div>
+
+    <!-- Mostrar un mensaje si no hay pedidos en proceso -->
+    <div *ngIf="!isLoading && pendingOrders.length === 0 && acceptedOrders.length==0 && rejectedOrders.length==0" class="text-center my-4">
+      <p>No hay notificaciones actualmente</p>
+    </div>
+
+    <!-- Mostrar pedidos en proceso -->
+    <div
+      *ngIf="!isLoading && pendingOrders.length > 0"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      <div
+        *ngFor="let notification of pendingOrders; trackBy: trackByFn"
+        class="bg-white shadow-lg rounded-lg overflow-hidden"
+      >
+        <div class="p-4">
+          <h2 class="font-bold text-lg mb-2">
+            Pedido ID: {{ notification.id }}
+          </h2>
+          <p class="mb-1">
+            <strong>Nombre del Cliente:</strong> {{ notification.userName }}
+          </p>
+          <p class="mb-3"><strong>Productos:</strong></p>
+          <ul class="list-disc list-inside mb-3">
+            <li *ngFor="let product of notification.products">
+              {{ product.name }} - Cantidad: {{ product.quantity }}
+            </li>
+          </ul>
+          <p class="mb-3"><strong>Total:</strong> ${{ notification.total }}</p>
+          <div class="flex justify-between">
+            <button
+              (click)="handleAccept(notification.id)"
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Aceptar
+            </button>
+            <button
+              (click)="handleReject(notification.id)"
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            >
+              Rechazar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mostrar pedidos Aceptados -->
+    <div *ngIf="!isLoading && acceptedOrders.length > 0">
+      <h2 class="text-xl font-bold mb-4">Pedidos Aceptados</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          *ngFor="let order of acceptedOrders; trackBy: trackByFn"
+          class="bg-white shadow-lg rounded-lg overflow-hidden relative"
+        >
+          <div
+            class="absolute top-2 right-2 cursor-pointer"
+            (click)="discardNotification(order.id)"
+          >
+            <span class="text-red-500 text-xl">X</span>
+          </div>
+          <div class="p-4">
+            <h2 class="font-bold text-lg mb-2">Pedido ID: {{ order.id }}</h2>
+            <p class="mb-1">
+              <strong>Nombre del Cliente:</strong> {{ order.userName }}
+            </p>
+            <p class="mb-3"><strong>Productos:</strong></p>
+            <ul class="list-disc list-inside mb-3">
+              <li *ngFor="let product of order.products">
+                {{ product.name }} - Cantidad: {{ product.quantity }}
+              </li>
+            </ul>
+            <p class="mb-3"><strong>Total:</strong> ${{ order.total }}</p>
+            <p class="text-green-500 font-semibold">Aceptado</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mostrar pedidos Rechazados -->
+    <div *ngIf="!isLoading && rejectedOrders.length > 0">
+      <h2 class="text-xl font-bold mb-4">Pedidos Rechazados</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          *ngFor="let order of rejectedOrders; trackBy: trackByFn"
+          class="bg-white shadow-lg rounded-lg overflow-hidden relative"
+        >
+          <div
+            class="absolute top-2 right-2 cursor-pointer"
+            (click)="discardNotification(order.id)"
+          >
+            <span class="text-red-500 text-xl">X</span>
+          </div>
+          <div class="p-4">
+            <h2 class="font-bold text-lg mb-2">Pedido ID: {{ order.id }}</h2>
+            <p class="mb-1">
+              <strong>Nombre del Cliente:</strong> {{ order.userName }}
+            </p>
+            <p class="mb-3"><strong>Productos:</strong></p>
+            <ul class="list-disc list-inside mb-3">
+              <li *ngFor="let product of order.products">
+                {{ product.name }} - Cantidad: {{ product.quantity }}
+              </li>
+            </ul>
+            <p class="mb-3"><strong>Total:</strong> ${{ order.total }}</p>
+            <p class="text-red-500 font-semibold">Rechazado</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-navbar></app-navbar>

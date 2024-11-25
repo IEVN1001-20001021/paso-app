@@ -1,0 +1,54 @@
+<div class="fixed bottom-4 right-4 z-10">
+  <button
+    (click)="toggleCart()"
+    class="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+  >
+    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+    <div
+      class="absolute top-0 right-0 h-4 w-4 bg-red-600 rounded-full flex items-center justify-center text-xs text-white"
+    >
+      {{ cartItems.length }}
+    </div>
+  </button>
+</div>
+
+<div
+  *ngIf="isCartOpen"
+  class="fixed inset-0 bg-black bg-opacity-50 z-20 transition-opacity"
+  (click)="toggleCart()"
+></div>
+
+<div
+  *ngIf="isCartOpen"
+  class="fixed top-0 right-0 w-full md:w-96 h-full bg-white z-30 overflow-y-auto shadow-lg transform transition-transform duration-300"
+>
+  <div class="flex justify-between items-center p-4 border-b">
+    <h2 class="text-2xl font-bold">Carrito de Compras</h2>
+    <button
+      (click)="toggleCart()"
+      class="text-gray-600 hover:text-gray-800 focus:outline-none"
+    >
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+  </div>
+  <ul class="divide-y">
+    <li
+      *ngFor="let item of cartItems"
+      class="p-4 flex justify-between items-center"
+    >
+      <div>
+        <p class="font-semibold">{{ item.nombre }}</p>
+        <p>${{ item.precio_publico }} x {{ item.quantity }}</p>
+        <p>Subtotal: ${{ (item.precio_publico * item.quantity).toFixed(2) }}</p>
+      </div>
+    </li>
+  </ul>
+  <div class="p-4 border-t mt-auto">
+    <button
+      (click)="proceedToCheckout()"
+      class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50"
+    >
+      Proceder a Compra
+    </button>
+  </div>
+</div>

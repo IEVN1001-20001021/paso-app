@@ -2,9 +2,13 @@
   <!-- Selector de ciudad -->
   <div class="mb-4">
     <label for="city-select" class="block text-gray-700"
-      >Selecciona una ciudad</label
+      >Selecciona la ciudad de destino</label
     >
-    <select id="city-select" class="w-full p-2 border rounded-md">
+    <select
+      id="city-select"
+      class="w-full p-2 border rounded-md"
+      [(ngModel)]="selectedCity"
+    >
       <option value="">Selecciona una ciudad</option>
       <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
     </select>
@@ -13,9 +17,14 @@
   <!-- Selector de fecha -->
   <div class="mb-4">
     <label for="date-input" class="block text-gray-700"
-      >Selecciona una fecha</label
+      >Selecciona la fecha de llegada</label
     >
-    <input type="date" id="date-input" class="w-full p-2 border rounded-md" />
+    <input
+      type="date"
+      id="date-input"
+      class="w-full p-2 border rounded-md"
+      [(ngModel)]="selectedDate"
+    />
   </div>
 
   <!-- Botón de búsqueda -->
@@ -26,41 +35,31 @@
     Buscar
   </button>
 
-  <!-- Título de viajes disponibles -->
-  <h2 class="mt-8 text-xl font-semibold">Próximos viajes a tu ciudad</h2>
-
-  <!-- Mensaje cuando no hay viajes -->
-  <div class="mt-4">
+  <!-- Lista de viajes -->
+  <h2 class="mt-8 text-xl font-semibold">Próximos viajes</h2>
+  <div class="mt-4 overflow-y-auto max-h-96">
     <div *ngIf="trips.length === 0" class="text-center text-gray-500">
-      No hay viajes disponibles para la fecha seleccionada.
+      No hay viajes disponibles para la ciudad y fecha seleccionadas.
     </div>
-
-    <!-- Lista de viajes -->
     <div
       *ngFor="let trip of trips"
-      class="mb-4 bg-white p-4 rounded-md shadow-md"
+      class="mb-4 bg-gray-100 p-4 rounded-md shadow-md flex justify-between items-center"
     >
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <img
-            src="https://via.placeholder.com/50"
-            alt="Repartidor"
-            class="rounded-full w-12 h-12"
-          />
-          <div class="ml-4">
-            <h3 class="text-lg">{{ trip.ciudad_salida }}</h3>
-            <p class="text-sm text-gray-600">
-              Fecha de llegada a tu ciudad: {{ trip.fecha_llegada }}
-            </p>
-          </div>
-        </div>
-        <a [routerLink]="['/detail', trip.id]" class="text-blue-500"
-          >Ver detalles</a
-        >
+      <div>
+        <p class="text-lg font-bold">
+          {{ trip.ciudad_salida }} → {{ trip.ciudad_destino }}
+        </p>
+        <p class="text-sm text-gray-600">
+          Llegada: {{ trip.fecha_salida | date : "shortDate" : "UTC" }}
+        </p>
+        <p class="text-sm text-gray-600">
+          Regreso: {{ trip.fecha_regreso | date : "shortDate": "UTC" }}
+        </p>
       </div>
+      <button class="text-blue-500 underline" (click)="viewDetails(trip.id)">
+        Ver detalles
+      </button>
     </div>
   </div>
 </div>
-
-<!-- Navbar -->
 <app-navbar></app-navbar>

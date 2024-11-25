@@ -10,11 +10,11 @@ import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-sign-up',
-  standalone: true,
-  imports: [ReactiveFormsModule, NgIf, RouterLink],
-  templateUrl: './sign-up.component.html',
-  styles: [],
+    selector: 'app-sign-up',
+    standalone: true,
+    imports: [ReactiveFormsModule, NgIf, RouterLink],
+    templateUrl: './sign-up.component.html',
+    styles: []
 })
 export class SignUpComponent implements OnInit {
   signUpForm!: FormGroup;

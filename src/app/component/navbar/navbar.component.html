@@ -8,42 +8,34 @@
   >
     <span class="icon block text-xl mb-1">
       <i class="fas fa-home"></i>
-      <!-- Icono de inicio -->
     </span>
     <span class="label text-sm">Inicio</span>
   </a>
   <a
-    [routerLink]="['/pages/add']"
+    [routerLink]="['/pages/new/new-trip']"
     routerLinkActive="active"
     class="text-center"
   >
     <span class="icon block text-xl mb-1">
       <i class="fas fa-plus-circle"></i>
-      <!-- Icono de agregar -->
     </span>
     <span class="label text-sm">Agregar</span>
   </a>
   <a
-    [routerLink]="['/pages/update']"
+    [routerLink]="['/pages/notifications']"
     routerLinkActive="active"
-    class="text-center"
+    class="relative text-center"
   >
     <span class="icon block text-xl mb-1">
-      <i class="fas fa-sync-alt"></i>
-      <!-- Icono de actualizar -->
+      <i class="fas fa-bell"></i>
     </span>
-    <span class="label text-sm">Actualizar</span>
-  </a>
-  <a
-    [routerLink]="['/pages/explore']"
-    routerLinkActive="active"
-    class="text-center"
-  >
-    <span class="icon block text-xl mb-1">
-      <i class="fas fa-search"></i>
-      <!-- Icono de explorar -->
+    <span
+      *ngIf="notificationCount > 0"
+      class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center"
+    >
+      {{ notificationCount }}
     </span>
-    <span class="label text-sm">Explorar</span>
+    <span class="label text-sm">Notificaciones</span>
   </a>
   <a
     [routerLink]="['/pages/profile']"
@@ -52,7 +44,6 @@
   >
     <span class="icon block text-xl mb-1">
       <i class="fas fa-user"></i>
-      <!-- Icono de perfil -->
     </span>
     <span class="label text-sm">Perfil</span>
   </a>
