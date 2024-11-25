@@ -7,7 +7,8 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000';
+  private apiUrl1 = 'http://localhost:5000';
+  private apiUrl = 'https://api-paso.onrender.com';
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
