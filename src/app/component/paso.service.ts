@@ -7,8 +7,8 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root',
 })
 export class PasoService {
-  private apiUrl = 'http://localhost:5000';
-  private apiUrl1 = 'https://api-paso.onrender.com'; // Cambiar si es necesario
+  private apiUrl1 = 'http://localhost:5000';
+  private apiUrl = 'https://api-paso.onrender.com'; // Cambiar si es necesario
   private cartItems: any[] = [];
   private cartSubject: BehaviorSubject<any[]> = new BehaviorSubject(
     this.cartItems
