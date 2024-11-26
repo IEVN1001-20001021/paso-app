@@ -6,6 +6,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { NotificationService } from '../notification.service';
+import { WebSocketService } from '../web-socket.service';
 
 @Component({
   selector: 'app-notifications',
@@ -31,7 +32,8 @@ export class NotificationsComponent implements OnInit {
     private pasoService: PasoService,
     private cookieService: CookieService,
     private ngZone: NgZone,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private WebSocketService: WebSocketService
   ) {}
 
   ngOnInit(): void {

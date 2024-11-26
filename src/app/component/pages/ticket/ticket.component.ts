@@ -115,7 +115,7 @@ export class TicketComponent implements OnInit {
         serviceFee: this.serviceFee.toFixed(2),
         deliveryFee: this.deliveryFee.toFixed(2),
       }),
-      state: "En Proceso",  
+      state: "Pendiente",  
     };
 
     console.log('Enviando el siguiente pedido al backend:', orderData);

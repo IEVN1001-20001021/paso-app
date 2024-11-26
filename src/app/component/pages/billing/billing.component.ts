@@ -53,10 +53,24 @@ export class BillingComponent implements OnInit {
       cvc: this.cvc,
     };
 
+    console.log('Guardando tarjeta:', cardInfo);
+
     this.pasoService.saveCardInfo(cardInfo).subscribe(() => {
-      this.cards.push(cardInfo);
-      this.selectedCard = cardInfo;
-      this.showForm = false;
+      // Vuelve a cargar las tarjetas del backend
+      this.pasoService.getUserProfile().subscribe((profile) => {
+        this.cards = profile.cards || [];
+
+        // Selecciona automáticamente la última tarjeta añadida
+        this.selectedCard = this.cards[this.cards.length - 1];
+
+        // Emitir el evento para notificar el cambio
+        if (this.selectedCard) {
+          this.selectedCardChange.emit(this.selectedCard);
+        }
+
+        // Oculta el formulario
+        this.showForm = false;
+      });
     });
   }
 
