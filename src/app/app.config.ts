@@ -6,7 +6,7 @@ import { routes } from './app.routes';
 
 // Configuración de Socket.IO
 const socketIoConfig: SocketIoConfig = {
-  url: 'https://api-paso.onrender.com', // Cambia esta URL a tu servidor
+  url: 'http://localhost:5000', // Cambia esta URL a tu servidor
   options: {
     transports: ['websocket'], // Opcional: usar WebSocket puro
   },
